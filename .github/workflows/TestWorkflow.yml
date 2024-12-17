@@ -1,0 +1,12 @@
+name: TestWorkflow
+on:
+  workflow_dispatch:
+
+jobs:
+  TestWorkflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        run: |
+          echo "Success"
+          exit 0
