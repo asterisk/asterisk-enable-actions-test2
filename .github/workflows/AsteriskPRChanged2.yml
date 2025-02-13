@@ -46,6 +46,24 @@ jobs:
     steps:
       - id: setup
         run: |
+          mkdir cacheit
+          ls -al > cacheit/dirlist.txt
+          mkdir output
+          ls -al > output/dirlist2.txt
 
-          gh pr edit --repo ${REPO} ${PR_NUMBER} --add-label duplicate
+      - id: cache-build-output
+        name: CacheBuildProducts
+        uses: actions/cache/save@v4
+        with:
+          path: cacheit
+          key:  Cleanup2-${{ env.PR_NUMBER }}
+
+      - name: Save Output
+        id: save-output
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cleanup2-${{ env.PR_NUMBER }}
+          if-no-files-found: ignore
+          path: output
+
 
