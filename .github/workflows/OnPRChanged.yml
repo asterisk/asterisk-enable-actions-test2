@@ -41,9 +41,3 @@ jobs:
       cancel-in-progress: true
     uses: ./.github/workflows/AsteriskPRChanged.yml
 
-  Cleanup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: CleanupStep
-        run: |
-          gh --repo ${REPO} pr edit ${PR_NUMBER} --add-label duplicate
