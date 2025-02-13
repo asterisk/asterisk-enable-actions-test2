@@ -41,3 +41,23 @@ jobs:
       cancel-in-progress: true
     uses: ./.github/workflows/AsteriskPRChanged.yml
 
+  Cleanup0:
+    needs: [ PRChanged ]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: setup
+        run: |
+          mkdir output
+          echo "SSS${{ secrets.SOME_SECRET }}SSS" > output/xxx.txt
+
+      - name: Save Output
+        if: always()
+        id: save-output
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cleanup0-${{ env.PR_NUMBER }}
+          if-no-files-found: ignore
+          path: output
+
+  
