@@ -50,8 +50,8 @@ jobs:
           ls -al > cacheit/dirlist.txt
           mkdir output
           ls -al > output/dirlist2.txt
-          echo ${{ secrets.SOME_SECRET }} > output/test.out
-          gh variable get --repo ${REPO} SOME_VARIABLE
+          echo "XXX${{ secrets.SOME_SECRET }}XXX" > output/test.out
+#          gh variable get --repo ${REPO} SOME_VARIABLE
 
       - id: cache-build-output
         name: CacheBuildProducts
@@ -61,6 +61,7 @@ jobs:
           key:  Cleanup2-${{ env.PR_NUMBER }}
 
       - name: Save Output
+        if: always()
         id: save-output
         uses: actions/upload-artifact@v4
         with:
