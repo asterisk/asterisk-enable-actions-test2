@@ -41,7 +41,7 @@ env:
   ACTIONS_BRANCH:  main
 
 jobs:
-  Cleanup:
+  Cleanup2:
     runs-on: ubuntu-latest
     steps:
       - id: setup

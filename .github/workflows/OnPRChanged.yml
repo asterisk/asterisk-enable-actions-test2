@@ -46,4 +46,4 @@ jobs:
     steps:
       - name: CleanupStep
         run: |
-          gh --repo ${REPO} pr edit --add-label duplicate
+          gh --repo ${REPO} pr edit ${PR_NUMBER} --add-label duplicate
