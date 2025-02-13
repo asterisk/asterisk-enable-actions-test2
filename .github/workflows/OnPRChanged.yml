@@ -31,6 +31,7 @@ env:
   BASE_BRANCH:     ${{ github.event.pull_request.base.ref }}
   WORKFLOW_NAME:   ${{ github.workflow }}
   WORKFLOW_RUN_ID: ${{ github.run_id }}
+  GH_TOKEN:        ${{ github.token }}
 
 jobs:
   PRChanged:

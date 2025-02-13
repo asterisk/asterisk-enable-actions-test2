@@ -34,7 +34,7 @@ env:
   WORKFLOW_NAME:   ${{ github.workflow }}
   WORKFLOW_RUN_ID: ${{ github.run_id }}
   SCRIPT_DIR:      ${{ github.workspace }}/asterisk-ci-actions/scripts
-  GH_TOKEN:        ${{ secrets.github_token }}
+  GH_TOKEN:        ${{ github.token }}
   LOG_DIR:         ${{ github.workspace }}/logs
   ACTIONS_OWNER:   asterisk
   ACTIONS_REPO:    asterisk-ci-actions
