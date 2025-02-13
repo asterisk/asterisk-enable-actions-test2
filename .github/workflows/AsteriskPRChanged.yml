@@ -1,0 +1,57 @@
+name: PRChangedCalled
+run-name: "${{ github.workflow }}-${{ github.event.label.name }}-${{ github.event.number }}"
+on:
+  workflow_call:
+    inputs:
+      actions_ref:
+        description: 'JSON object reference to the actions: { "owner": "asterisk", "repo": "asterisk-ci-actions", "branch": "main" }'
+        type: string
+        required: false
+        default: '{ "owner": "asterisk", "repo": "asterisk-ci-actions", "branch": "main" }'
+
+permissions:
+  actions: read
+#  attestations: read|write|none
+  checks: read
+  contents: read
+#  deployments: read|write|none
+#  id-token: write|none
+  issues: read
+#  discussions: read|write|none
+#  packages: read|write|none
+#  pages: read|write|none
+  pull-requests: read
+#  repository-projects: read|write|none
+#  security-events: read|write|none
+  statuses: read
+
+env:
+  REPO:            ${{ github.repository }}
+  REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
+  REPO_ORG:        ${{ github.event.repository.owner.login }}
+  PR_NUMBER:       ${{ github.event.number }}
+  BASE_BRANCH:     ${{ github.event.pull_request.base.ref }}
+  WORKFLOW_NAME:   ${{ github.workflow }}
+  WORKFLOW_RUN_ID: ${{ github.run_id }}
+  SCRIPT_DIR:      ${{ github.workspace }}/asterisk-ci-actions/scripts
+  GH_TOKEN:        ${{ secrets.github_token }}
+  LOG_DIR:         ${{ github.workspace }}/logs
+  ACTIONS_OWNER:   asterisk
+  ACTIONS_REPO:    asterisk-ci-actions
+  ACTIONS_BRANCH:  main
+
+jobs:
+#
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+      - id: setup
+        run: |
+          # Wait then get testsuite PR
+
+          wget -qO asterisk-ci-actions.tar.gz \
+            https://github.com/${ACTIONS_OWNER}/${ACTIONS_REPO}/archive/refs/heads/${ACTIONS_BRANCH}.tar.gz
+          tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
+
+          gh pr edit ${PR_NUMBER} --add-label bug
+

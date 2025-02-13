@@ -1,0 +1,32 @@
+name: PRChanged
+# WARNING!  The run name MUST start with "PR <pr_number>".
+# The accompanying privleged workflow parses this to find
+# the PR number.  It's the only reliable way it can get it.
+run-name: "PR ${{ github.event.number }} Changed by ${{ github.actor }}"
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  actions: read
+#  attestations: read|write|none
+  checks: read
+  contents: read
+#  deployments: read|write|none
+#  id-token: write|none
+  issues: read
+#  discussions: read|write|none
+#  packages: read|write|none
+#  pages: read|write|none
+  pull-requests: write
+#  repository-projects: read|write|none
+#  security-events: read|write|none
+  statuses: read
+
+jobs:
+  PRChanged:
+    name: "run-check"
+    concurrency:
+      group: check-${{ github.base_ref }}-${{ github.ref_name }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/AsteriskPRChanged.yml
