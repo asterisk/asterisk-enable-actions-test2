@@ -1,4 +1,4 @@
-name: PRChangedCalled
+name: PRChangedCalled2
 run-name: "${{ github.workflow }}-${{ github.event.label.name }}-${{ github.event.number }}"
 on:
   workflow_call:
@@ -20,7 +20,7 @@ permissions:
 #  discussions: read|write|none
 #  packages: read|write|none
 #  pages: read|write|none
-  pull-requests: write
+  pull-requests: read
 #  repository-projects: read|write|none
 #  security-events: read|write|none
   statuses: read
@@ -41,22 +41,11 @@ env:
   ACTIONS_BRANCH:  main
 
 jobs:
-  PRChanged2:
-    name: "run-check"
-    uses: ./.github/workflows/AsteriskPRChanged2.yml
-
   Cleanup:
-    needs: [ PRChanged2 ]
     runs-on: ubuntu-latest
     steps:
       - id: setup
         run: |
-          # Wait then get testsuite PR
 
-          wget -qO asterisk-ci-actions.tar.gz \
-            https://github.com/${ACTIONS_OWNER}/${ACTIONS_REPO}/archive/refs/heads/${ACTIONS_BRANCH}.tar.gz
-          tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
-          ls -al
-
-          gh --repo ${REPO} pr edit --add-label bug
+          gh pr edit --repo ${REPO} ${PR_NUMBER} --add-label duplicate
 
