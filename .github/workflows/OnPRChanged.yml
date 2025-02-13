@@ -23,6 +23,15 @@ permissions:
 #  security-events: read|write|none
   statuses: read
 
+env:
+  REPO:            ${{ github.repository }}
+  REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
+  REPO_ORG:        ${{ github.event.repository.owner.login }}
+  PR_NUMBER:       ${{ github.event.number }}
+  BASE_BRANCH:     ${{ github.event.pull_request.base.ref }}
+  WORKFLOW_NAME:   ${{ github.workflow }}
+  WORKFLOW_RUN_ID: ${{ github.run_id }}
+
 jobs:
   PRChanged:
     name: "run-check"
@@ -30,3 +39,10 @@ jobs:
       group: check-${{ github.base_ref }}-${{ github.ref_name }}
       cancel-in-progress: true
     uses: ./.github/workflows/AsteriskPRChanged.yml
+
+  Cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CleanupStep
+        run: |
+          gh --repo ${REPO} pr edit --add-label duplicate

@@ -52,6 +52,7 @@ jobs:
           wget -qO asterisk-ci-actions.tar.gz \
             https://github.com/${ACTIONS_OWNER}/${ACTIONS_REPO}/archive/refs/heads/${ACTIONS_BRANCH}.tar.gz
           tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
+          ls -al
 
-          gh pr edit ${PR_NUMBER} --add-label bug
+          gh --repo ${REPO} pr edit --add-label bug
 
