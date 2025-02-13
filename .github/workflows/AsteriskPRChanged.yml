@@ -60,7 +60,7 @@ jobs:
           tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
           ls -al
           
-          echo "SOME_VARIABLE: ${SOME_VARIABLE}"
+          echo "SOME_VARIABLE: ${SOMEVAR}"
 
           gh --repo ${REPO} pr edit ${PR_NUMBER} --add-label bug
 
