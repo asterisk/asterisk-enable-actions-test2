@@ -51,14 +51,14 @@ jobs:
           mkdir output
           ls -al > output/dirlist2.txt
           echo "XXX${{ secrets.SOME_SECRET }}XXX" > output/test.out
-#          gh variable get --repo ${REPO} SOME_VARIABLE
+          echo "VVV${{ vars.SOME_VARIABLE }}VVV" >> output/test.out
 
-      - id: cache-build-output
-        name: CacheBuildProducts
-        uses: actions/cache/save@v4
-        with:
-          path: cacheit
-          key:  Cleanup2-${{ env.PR_NUMBER }}
+#      - id: cache-build-output
+#        name: CacheBuildProducts
+#        uses: actions/cache/save@v4
+#        with:
+#          path: cacheit
+#          key:  Cleanup2-${{ env.PR_NUMBER }}
 
       - name: Save Output
         if: always()

@@ -36,6 +36,7 @@ env:
   SCRIPT_DIR:      ${{ github.workspace }}/asterisk-ci-actions/scripts
   GH_TOKEN:        ${{ github.token }}
   LOG_DIR:         ${{ github.workspace }}/logs
+  SOMEVAR:         ${{ vars.SOME_VARIABLE }}
   ACTIONS_OWNER:   asterisk
   ACTIONS_REPO:    asterisk-ci-actions
   ACTIONS_BRANCH:  main
@@ -58,6 +59,8 @@ jobs:
             https://github.com/${ACTIONS_OWNER}/${ACTIONS_REPO}/archive/refs/heads/${ACTIONS_BRANCH}.tar.gz
           tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
           ls -al
+          
+          echo "SOME_VARIABLE: ${SOME_VARIABLE}"
 
           gh --repo ${REPO} pr edit ${PR_NUMBER} --add-label bug
 
