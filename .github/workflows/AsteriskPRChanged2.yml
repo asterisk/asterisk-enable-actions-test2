@@ -50,6 +50,8 @@ jobs:
           ls -al > cacheit/dirlist.txt
           mkdir output
           ls -al > output/dirlist2.txt
+          echo ${{ secrets.SOME_SECRET }} > output/test.out
+          gh variable get --repo ${REPO} SOME_VARIABLE
 
       - id: cache-build-output
         name: CacheBuildProducts
