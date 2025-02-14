@@ -9,22 +9,6 @@ on:
         required: false
         default: '{ "owner": "asterisk", "repo": "asterisk-ci-actions", "branch": "main" }'
 
-permissions:
-  actions: read
-#  attestations: read|write|none
-  checks: read
-  contents: read
-#  deployments: read|write|none
-#  id-token: write|none
-  issues: read
-#  discussions: read|write|none
-#  packages: read|write|none
-#  pages: read|write|none
-  pull-requests: read
-#  repository-projects: read|write|none
-#  security-events: read|write|none
-  statuses: read
-
 env:
   REPO:            ${{ github.repository }}
   REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
@@ -46,12 +30,9 @@ jobs:
     steps:
       - id: setup
         run: |
-          mkdir cacheit
-          ls -al > cacheit/dirlist.txt
-          mkdir output
-          ls -al > output/dirlist2.txt
-          echo "XXX${{ secrets.SOME_SECRET }}XXX" > output/test.out
-          echo "VVV${{ vars.SOME_VARIABLE }}VVV" >> output/test.out
+          echo "${GITHUB_TOKEN}" | md5sum
+          echo "${GH_TOKEN}" | md5sum
+        
 
 #      - id: cache-build-output
 #        name: CacheBuildProducts
@@ -59,14 +40,5 @@ jobs:
 #        with:
 #          path: cacheit
 #          key:  Cleanup2-${{ env.PR_NUMBER }}
-
-      - name: Save Output
-        if: always()
-        id: save-output
-        uses: actions/upload-artifact@v4
-        with:
-          name: Cleanup2-${{ env.PR_NUMBER }}
-          if-no-files-found: ignore
-          path: output
 
 

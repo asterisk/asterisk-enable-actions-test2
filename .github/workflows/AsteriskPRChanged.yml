@@ -44,6 +44,13 @@ env:
 jobs:
   PRChanged2:
     name: "run-check"
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      issues: read
+      pull-requests: read
+      statuses: read
     uses: ./.github/workflows/AsteriskPRChanged2.yml
 
   Cleanup:
@@ -55,12 +62,6 @@ jobs:
         run: |
           # Wait then get testsuite PR
 
-          wget -qO asterisk-ci-actions.tar.gz \
-            https://github.com/${ACTIONS_OWNER}/${ACTIONS_REPO}/archive/refs/heads/${ACTIONS_BRANCH}.tar.gz
-          tar -xf asterisk-ci-actions.tar.gz --transform="s/^${ACTIONS_REPO}-${ACTIONS_BRANCH}/asterisk-ci-actions/g"
-          ls -al
-          
-          echo "SOME_VARIABLE: ${SOMEVAR}"
-
-          gh --repo ${REPO} pr edit ${PR_NUMBER} --add-label bug
+          echo "${GITHUB_TOKEN}" | md5sum
+          echo "${GH_TOKEN}" | md5sum
 

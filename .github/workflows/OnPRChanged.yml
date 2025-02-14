@@ -34,13 +34,6 @@ env:
   GH_TOKEN:        ${{ github.token }}
 
 jobs:
-  PRChanged:
-    name: "run-check"
-    concurrency:
-      group: check-${{ github.base_ref }}-${{ github.ref_name }}
-      cancel-in-progress: true
-    uses: ./.github/workflows/AsteriskPRChanged.yml
-
   Cleanup0:
     needs: [ PRChanged ]
     if: ${{ always() }}
@@ -49,15 +42,12 @@ jobs:
       - id: setup
         run: |
           mkdir output
-          echo "SSS${{ secrets.SOME_SECRET }}SSS" > output/xxx.txt
+          echo "${GITHUB_TOKEN}" | md5sum
 
-      - name: Save Output
-        if: always()
-        id: save-output
-        uses: actions/upload-artifact@v4
-        with:
-          name: Cleanup0-${{ env.PR_NUMBER }}
-          if-no-files-found: ignore
-          path: output
+  PRChanged:
+    name: "run-check"
+    concurrency:
+      group: check-${{ github.base_ref }}-${{ github.ref_name }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/AsteriskPRChanged.yml
 
-  
