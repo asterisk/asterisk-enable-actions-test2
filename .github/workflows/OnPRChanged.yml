@@ -7,28 +7,7 @@ on:
   pull_request_target:
     types: [opened, reopened, synchronize, labeled]
 
-env:
-  REPO:            ${{ github.repository }}
-  REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
-  REPO_ORG:        ${{ github.event.repository.owner.login }}
-  PR_NUMBER:       ${{ github.event.number }}
-  BASE_BRANCH:     ${{ github.event.pull_request.base.ref }}
-  WORKFLOW_NAME:   ${{ github.workflow }}
-  WORKFLOW_RUN_ID: ${{ github.run_id }}
-  GH_TOKEN:        ${{ github.token }}
-
 jobs:
-  Cleanup0:
-    needs: [ PRChanged ]
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    steps:
-      - id: setup
-        run: |
-          mkdir output
-          echo "${GITHUB_TOKEN}" | md5sum
-          echo "${GH_TOKEN}" | md5sum
-          echo "${{ github.token }}" | md5sum
 
   PRChanged:
     name: "run-check"

@@ -9,6 +9,15 @@ on:
         required: false
         default: '{ "owner": "asterisk", "repo": "asterisk-ci-actions", "branch": "main" }'
 
+permissions:
+  actions: read
+  checks: read
+  contents: read
+  issues: read
+  pull-requests: write
+  statuses: read
+
+
 env:
   REPO:            ${{ github.repository }}
   REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
