@@ -9,22 +9,6 @@ on:
         required: false
         default: '{ "owner": "asterisk", "repo": "asterisk-ci-actions", "branch": "main" }'
 
-permissions:
-  actions: read
-#  attestations: read|write|none
-  checks: read
-  contents: read
-#  deployments: read|write|none
-#  id-token: write|none
-  issues: read
-#  discussions: read|write|none
-#  packages: read|write|none
-#  pages: read|write|none
-  pull-requests: write
-#  repository-projects: read|write|none
-#  security-events: read|write|none
-  statuses: read
-
 env:
   REPO:            ${{ github.repository }}
   REPO_DIR:        ${{ github.workspace }}/${{ github.event.repository.name }}
@@ -61,7 +45,7 @@ jobs:
       - id: setup
         run: |
           # Wait then get testsuite PR
-
           echo "${GITHUB_TOKEN}" | md5sum
           echo "${GH_TOKEN}" | md5sum
+          echo "${{ github.token }}" | md5sum
 

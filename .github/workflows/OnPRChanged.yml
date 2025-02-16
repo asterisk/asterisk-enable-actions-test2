@@ -5,23 +5,7 @@ name: PRChanged
 run-name: "PR ${{ github.event.number }} Changed by ${{ github.actor }}"
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize]
-
-permissions:
-  actions: read
-#  attestations: read|write|none
-  checks: read
-  contents: read
-#  deployments: read|write|none
-#  id-token: write|none
-  issues: read
-#  discussions: read|write|none
-#  packages: read|write|none
-#  pages: read|write|none
-  pull-requests: write
-#  repository-projects: read|write|none
-#  security-events: read|write|none
-  statuses: read
+    types: [opened, reopened, synchronize, labeled]
 
 env:
   REPO:            ${{ github.repository }}
@@ -43,6 +27,8 @@ jobs:
         run: |
           mkdir output
           echo "${GITHUB_TOKEN}" | md5sum
+          echo "${GH_TOKEN}" | md5sum
+          echo "${{ github.token }}" | md5sum
 
   PRChanged:
     name: "run-check"
