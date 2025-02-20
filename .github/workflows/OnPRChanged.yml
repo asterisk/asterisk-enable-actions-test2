@@ -9,10 +9,12 @@ on:
 
 jobs:
 
-  PRChanged:
-    name: "run-check"
-    concurrency:
-      group: check-${{ github.base_ref }}-${{ github.ref_name }}
-      cancel-in-progress: true
-    uses: ./.github/workflows/AsteriskPRChanged.yml
-
+  Setup:
+    runs-on: ubuntu-latest
+    steps:
+      - id: setup
+        env:
+          TEST_FROM_VARS: ${{ fromJSON(vars.TEST_BOOLEAN || false) && '--upgrade-note' || '' }}
+        run: |
+          # Wait then get testsuite PR
+          echo "AAA ${TEST_FROM_VARS} BBB"
